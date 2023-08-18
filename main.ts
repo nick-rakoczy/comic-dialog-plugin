@@ -23,18 +23,20 @@ export default class ComicDialogPlugin extends Plugin {
             line,
             type: this.detectLineType(line),
             speaker: null,
-            text: null
+            text: null,
+            mood: null
         })).map(line => {
            if (line.type == "speech") {
                const trimmedLine = line.line.trim();
                const nameLen = trimmedLine.indexOf(":");
-               const speaker = trimmedLine.substring(0, nameLen);
+               const [speaker, mood] = trimmedLine.substring(0, nameLen).split("|", 2);
                const text = trimmedLine.substring(nameLen + 1).trim();
 
                return {
                    ...line,
                    speaker,
-                   text
+                   text,
+                   mood
                };
            } else {
                return line;
@@ -80,6 +82,12 @@ export default class ComicDialogPlugin extends Plugin {
 
                     const speechDiv = el.createDiv("speech");
                     const nameDiv = speechDiv.createDiv("name");
+
+                    if (line.mood) {
+                        const moodDiv = speechDiv.createDiv("mood");
+                        moodDiv.appendText(line.mood);
+                    }
+
                     const speakerNumber = speakers.indexOf(speakerName);
                     const speakerColor = configuredSpeakers[speakerName];
                     speechDiv.appendChild(targetDiv);
@@ -150,6 +158,13 @@ export default class ComicDialogPlugin extends Plugin {
             .comic-dialog-block .speech .name {
                 width: 10rem;
                 flex: 0 0 fit-content;
+            }
+
+            .comic-dialog-block .speech .mood {
+                width: 10rem;
+                flex: 0 0 fit-content;
+                font-style: italic;
+                color: #696d70;
             }
 
             .comic-dialog-block .speech .name.p0 {
