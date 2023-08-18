@@ -1,0 +1,11 @@
+{
+	"id": "comic-dialog-plugin",
+	"name": "Comic Dialog Plugin",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Formats comic dialog",
+	"author": "Nick Rakoczy",
+	"authorUrl": "https://obsidian.md",
+	"fundingUrl": "https://obsidian.md/pricing",
+	"isDesktopOnly": false
+}
