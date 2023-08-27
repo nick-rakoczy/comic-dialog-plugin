@@ -29,7 +29,7 @@ export default class ComicDialogPlugin extends Plugin {
            if (line.type == "speech") {
                const trimmedLine = line.line.trim();
                const nameLen = trimmedLine.indexOf(":");
-               const [speaker, mood] = trimmedLine.substring(0, nameLen).split("|", 2);
+               const [speaker, mood] = trimmedLine.substring(0, nameLen).split("|", 2).map(s => s.trim());
                const text = trimmedLine.substring(nameLen + 1).trim();
 
                return {
@@ -50,6 +50,7 @@ export default class ComicDialogPlugin extends Plugin {
         const speakers = lines
             .filter(line => line.speaker)
             .map(line => line.speaker!)
+            .unique()
             .filter(speaker => !configuredSpeakers[speaker]);
 
         lines.forEach(line => {
